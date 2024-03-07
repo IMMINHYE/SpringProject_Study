@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<div layout:fragment="content">
+
+<div class="untree_co-section">
+    <div class="container">
+        <div class="custom-block" data-aos="fade-up" data-aos-delay="100">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <form role="form" method="post" enctype="multipart/form-data" th:object="${mediaFormDTO}"
+                          class="contact-form" data-aos="fade-up" data-aos-delay="200">
+
+                        <input type="hidden" th:value="*{eid}" class="form-control">
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="text-black" style="color: white">제목</label>
+                                    <input type="text" th:field="*{etitle}" class="form-control">
+                                </div>
+                                <p th:if="${#fields.hasErrors('etitle')}" th:errors="*{etitle}" class="fieldError" style="color: white">
+                                    잘못된
+                                    정보</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-black" style="color: white">프로그램 url</label>
+                            <input type="text" th:field="*{elink}" class="form-control">
+                        </div>
+                        <p th:if="${#fields.hasErrors('elink')}" th:errors="*{elink}" class="fieldError" style="color: white">잘못된
+                            정보</p>
+
+
+                        <div th:if="${#lists.isEmpty(mediaFormDTO.mediaImgDTOList)}">
+                            <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">
+                                <div class="custom-file img-div">
+                                    <input type="file" class="custom-file-input"
+                                           name="mediaImgFile">
+                                    <label class="custom-file-label"
+                                           th:text="미디어사진 + ${num}"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${not #lists.isEmpty(mediaFormDTO.mediaImgDTOList)}">
+                            <div class="form-group" th:each="mediaImgDTO,
+                                 status: ${mediaFormDTO.mediaImgDTOList}">
+                                <div class="custom-file img-div">
+                                    <input type="file" class="custom-file-input"
+                                           name="mediaImgFile">
+                                    <label class="custom-file-label" th:text="${not #strings
+                                    .isEmpty(mediaImgDTO.oriImgName)} ? ${mediaImgDTO
+                                    .oriImgName} : '미디어사진' + ${status.index+1}">
+                                    </label>
+                                    <input type="hidden" name="mediaImgIds"
+                                           th:value="${mediaImgDTO.eiid}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${#strings.isEmpty(mediaFormDTO.eid)}"
+                             style="text-align: right">
+                            <button th:formaction="${'/media/mediaRegister'}" type="submit"
+                                    class="btn btn-primary" id="reg">등록
+                            </button>
+                        </div>
+
+                        <div th:unless="${#strings.isEmpty(mediaFormDTO.eid)}"
+                             style="text-align: center">
+                            <button th:formaction="${'/media/mediaRegister/' + eid}"
+                                    type="submit" class="btn btn-primary" id="mod">수정
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        var errorMessage = [[${errorMessage}]];
+        if (errorMessage != null) {
+            alert(errorMessage);
+        }
+        bindDomEvent();
+    });
+    function bindDomEvent() {
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop(); // 이미지 파일명
+            var fileExt = fileName.substring(fileName.lastIndexOf(".") + 1); // 확장자 추출
+            fileExt = fileExt.toLowerCase(); // 소문자 변환
+
+            if (fileExt != "jpg" && fileExt != "jpeg" && fileExt != "gif" && fileExt != "png" && fileExt != "bmp" && fileExt != "avif") {
+                alert("이미지 파일만 등록이 가능합니다.");
+                return;
+            }
+            $(this).siblings(".custom-file-label").html(fileName);
+        });
+    }
+</script>
+</div>

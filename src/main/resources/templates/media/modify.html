@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout.html}">
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<div layout:fragment="content">
+    <style>
+        .TLQKF {
+            /*word-break: break-all;*/
+            /*overflow: hidden;*/
+            /*white-space: normal;*/
+            /*line-height: 12;*/
+            /*height: 16em;*/
+            /*text-align: left;*/
+            /*word-wrap: break-word;*/
+            /*display: -webkit-box;*/
+            /*-webkit-line-clamp: 3;*/
+            /*-webkit-box-orient: vertical;*/
+        }
+
+        .media_img {
+            width: 600px;
+        }
+
+        .media_img2 {
+            width: 150px;
+            height: 80px;
+        }
+    </style>
+
+
+    <form id="form" method="post" th:object="${backdto}">
+
+        <input type="hidden" id="eid" name="eid" th:value="${media.eid}">
+
+        <div class="site-mobile-menu site-navbar-target">
+            <div class="site-mobile-menu-header">
+                <div class="site-mobile-menu-close">
+                    <span class="icofont-close js-menu-toggle"></span>
+                </div>
+            </div>
+            <div class="site-mobile-menu-body"></div>
+        </div>
+
+        <div class="hero hero-inner">
+        </div>
+
+        <div class="untree_co-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="text-left">
+                            <h2 class="section-title mb-4" style="font-family: 'Varela Round', Helvetica, Arial, sans-serif; color: white"
+                                th:text="${media.etitle}"></h2>
+                        </div>
+                        <div class="repimYn">
+                            <figure class="img-play-video">
+                                <img th:src="${media.mediaImgDTOList[0].imgUrl}"
+                                     class="rounded repImg media_img" th:alt="${media.etitle}">
+
+<!--                                <iframe width="560" height="315" th:src="@{${media.elink}}"></iframe>-->
+
+                            </figure>
+                        </div>
+                        <div class="row">
+                            <div class="text-center" th:each="mediaImg: ${media.mediaImgDTOList}">
+                                <th:block th:if="${mediaImg.getRepImgYn().equals('N') }">
+                                    <div class="TLQKF" style="margin: 10px;">
+                                        <a th:href="${mediaImg.imgUrl}" class="gal-item" data-fancybox="gallery">
+                                            <img th:if="${not #strings.isEmpty(mediaImg.imgUrl)}"
+                                                 th:src="${mediaImg.imgUrl}" class="img-fluid media_img2">
+                                        </a>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="button" id="mod" class="btn btn-primary" style="position: relative; z-index: 2"
+                                    sec:authorize="hasAnyAuthority('ADMIN')">수정
+                            </button>
+                            <button type="button" id="del" class="btn btn-primary"style="position: relative; z-index: 2"
+                                    sec:authorize="hasAnyAuthority('ADMIN')">삭제
+                            </button>
+                            <button type="button" id="hom" class="btn btn-primary"style="position: relative; z-index: 2">목록
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+</html>
+<script>
+    $("#del").on("click", function () {
+        if (!confirm("정말로 삭제하시겠습니까?")) return;
+
+        let form = $("#form");
+        form.attr("action", "[[@{/media/del(eid=${media.eid})}]]");
+        form.attr("method", "post");
+        form.submit();
+    });
+    $("#mod").on("click", function () {
+        var eid = [[${media.eid}]];
+        location.href = "/media/mediaRegister/" + eid;
+    });
+    $("#hom").on("click", function () {
+        var eid = [[${media.eid}]];
+        location.href = "/media/medialist";
+    });
+</script>

@@ -1,0 +1,35 @@
+server:
+  port: 8085
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/studydb?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: lmh
+    password: 1234
+
+  servlet:
+    multipart:
+      maxFileSize: 20MB
+      maxRequestSize: 100MB
+
+  devtools:
+    livereload:
+      enabled: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+ImgLocation: C:/travel/photo
+
+uploadPath: file:///C:/travel/
+
+logging:level:
+  org.springframework:info
+  com.example.study001:debug

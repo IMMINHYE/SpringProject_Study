@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+      lang="en">
+
+
+
+<div class="container-fluid mt-3" layout:fragment="content">
+
+    <!-- book section -->
+    <section class="book_section layout_padding">
+        <div class="container">
+            <div class="heading_container">
+                <h2>
+                    Make Study
+                </h2>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form_container">
+                        <form action="/study/modify" method="post">
+                            <input type="hidden" name="sid" th:value="${makedto.sid}" readonly>
+                        <div>
+                            <input type="text" class="form-control"  name="studyName" th:value="${makedto.studyName}" readonly/>
+                        </div>
+                        <div>
+                            <input type="number" class="form-control"  name="phoneNumber" th:value="${makedto.phoneNumber}" readonly/>
+                        </div>
+                        <div>
+                            <input type="email" class="form-control"name="email" th:value="${makedto.email}" readonly/>
+                        </div>
+                        <div>
+                            <textarea name="intro" rows="5" class="form-control" readonly>[[${makedto.intro}]]</textarea>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control"  name="post" th:value="${makedto.post}" readonly/>
+                        </div>
+                        <div>
+                            <input type="number" class="form-control"  name="persons" th:value="${makedto.persons}"/>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control"  name="progressMethod" th:value="${makedto.progressMethod}" readonly/>
+
+                        </div>
+                        <div>
+                            <input type="date" class="form-control" placeholder="마감일" name="closeDate" th:value="${makedto.closeDate}"/>
+                        </div>
+                        <div class="btn_box" >
+                            <button type="submit" id="modify">수정</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+<!-- end book section -->
+
+<script layout:fragment="script" th:inline="javascript">
+    var msg=[[${msg}]]
+    function msgdisplay(){
+        if(msg!=null) {
+
+            alert(msg);
+        }
+    }
+    msgdisplay();
+</script>
+
+<script layout:fragment="script" th:inline="javascript">
+    document.querySelector("#modify").addEventListener("click", function (e) {
+        alert("수정 완료.");
+        e.defaultPrevented;
+        self.location = "/study/modify?sid=" + [[${makedto.sid}]];
+        // 수정 완료 후 /study/studylist로 이동
+        self.location = "/study/view";
+    });
+</script>

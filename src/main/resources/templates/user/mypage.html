@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+      lang="en">
+
+<head>
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/css/admin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/admin/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/admin/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/css/admin/quill/quill.snow.css" rel="stylesheet">
+    <link href="/css/admin/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/css/admin/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/css/admin/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="/css/admin/admin.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: NiceAdmin
+    * Updated: Nov 17 2023 with Bootstrap v5.3.2
+    * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<div layout:fragment="content">
+
+    <section class="mypage_section">
+        <br>
+        <br>
+        <br>
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+
+                    <div class="card-body">
+                        <h5 class="card-title">User Information Modify</h5>
+                        <div class="col-lg-6">
+                            <div class="row justify-content-start">
+                                <form action="/user/editPassword" method="post">
+                                    <p>Username: <span th:text="${user.username}"></span></p>
+                                    <p>Name: <span th:text="${user.name}"></span></p>
+                                    <p>Email: <span th:text="${user.email}"></span></p>
+                                    <label for="newPassword">New Password:</label>
+                                    <input type="password" id="newPassword" name="newPassword" required>
+                                    <button type="submit">Update Password</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <br>
+        <br>
+    </section>
+
+</div>
+<script layout:fragment="script" th:inline="javascript">
+    var successMessage = [[${successMessage}]]
+    function showAlert() {
+        console.log(successMessage)
+        if (successMessage !== null) {
+            alert(successMessage);
+        }
+    }
+    showAlert();
+
+</script>

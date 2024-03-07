@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+      lang="en">
+
+
+
+    <div class="container-fluid mt-3" layout:fragment="content">
+
+<!-- book section -->
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="heading_container">
+            <h2>
+                Make Study
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form_container">
+                    <form action="/study/makeRegister" method="post">
+                        <div>
+                            <input type="text" class="form-control" placeholder="Study name" name="studyName" />
+                        </div>
+                        <div>
+                            <input type="number" class="form-control" placeholder="Phone Number" name="phoneNumber" />
+                        </div>
+                        <div>
+                            <input type="email" class="form-control" placeholder="Your Email" name="email"/>
+                        </div>
+                        <div>
+                            <textarea name="intro" rows="5" class="form-control" placeholder="스터디 소개"></textarea>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control" placeholder="Your Post" name="post"/>
+                        </div>
+                        <div>
+                            <input type="number" class="form-control" placeholder="How many persons?" name="persons"/>
+                        </div>
+                        <div>
+                            <select class="form-control nice-select wide" name="progressMethod">
+                                <option value="" disabled selected>
+                                    진행방식
+                                </option>
+                                <option value="on-line">
+                                    on-line
+                                </option>
+                                <option value="off-line">
+                                    off-line
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="date" class="form-control" placeholder="마감일" name="closeDate"/>
+                        </div>
+                        <div class="btn_box" >
+                            <button type="submit">Make Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+    </div>
+
+</section>
+
+</div>
+<!-- end book section -->
+
+
+<script layout:fragment="script" th:inline="javascript">
+    var msg=[[${msg}]]
+    function msgdisplay(){
+        if(msg!=null) {
+
+            alert(msg);
+        }
+    }
+    msgdisplay();
+</script>
